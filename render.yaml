@@ -1,0 +1,18 @@
+# render.yaml
+
+services:
+  - type: web
+    name: your-laravel-app-name # Thay thế bằng tên ứng dụng của bạn trên Render
+    env: php
+    buildCommand: composer install --no-dev --optimize-autoloader && npm install && npm run build # Lệnh build
+    startCommand: php artisan serve --host 0.0.0.0 --port $PORT # Lệnh khởi động
+    healthCheckPath: / # Hoặc đường dẫn health check phù hợp với ứng dụng của bạn
+    envVars:
+      - key: APP_KEY
+        generateValue: true 
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false" # Đảm bảo false trong production
+      - key: LOG_CHANNEL
+        value: stderr # Đẩy log ra stdout/stderr để Render có thể bắt được
